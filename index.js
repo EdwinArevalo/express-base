@@ -1,8 +1,15 @@
 const express = require('express');
 const app = express();
+const morgan = require('morgan');
 const fs = require('fs');
 
+function logger(req, res, next){
+    console.log(`Route receivied ${req.protocol}://${req.get('host')}${req.originalUrl}`);
+    next();
+}
+
 app.use(express.json());//necesario para trabajar con json
+app.use(morgan('dev'));
 
 app.all('/about',((req, res, next)=>{
     console.log('passed');
